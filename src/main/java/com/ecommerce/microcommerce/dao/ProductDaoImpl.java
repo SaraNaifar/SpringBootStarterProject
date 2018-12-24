@@ -9,19 +9,21 @@ public class ProductDaoImpl implements ProductDao {
 
     public static List<Product> products = new ArrayList<>();
     static{
-        products.add(new Product(1, new String("livre"), 320));
-        products.add(new Product( 2, new String("ordinateur"), 600));
-        products.add(new Product(3, new String("clavier"), 190));
+        products.add(new Product(1, new String("livre"), 320 , 300));
+        products.add(new Product( 2, new String("ordinateur"), 600, 540));
+        products.add(new Product(3, new String("clavier"), 190, 160));
     }
 
     @Override
     // type de retour : List<Product> -- retourne la list construite
     public List<Product> findAll() {
+
         return products;
     }
 
     @Override
     public Product findById(int id) {
+
         for(Product product : products ){
             if (product.getId() == id ){
                 return product ;

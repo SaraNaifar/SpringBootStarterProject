@@ -1,18 +1,23 @@
 package com.ecommerce.microcommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+@JsonFilter("MonFiltreDynamique")
 public class Product {
     private int id ;
     private String nom;
     private int prix;
+    private int prixAchat;
 
     //Constructeur sans argument
     public Product() {
     }
     //Constructeur pour les test
-    public Product(int id , String nom, int prix){
+    public Product(int id , String nom, int prix, int prixAchat){
         this.id=id;
         this.nom=nom;
         this.prix=prix;
+        this.prixAchat=prixAchat;
     }
     //Setters et Getters
     public int getId() {
@@ -29,6 +34,14 @@ public class Product {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public int getPrixAchat() {
+        return prixAchat;
+    }
+
+    public void setPrixAchat(int prixAchat) {
+        this.prixAchat = prixAchat;
     }
 
     public int getPrix() {
