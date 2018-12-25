@@ -23,7 +23,7 @@ public class ProductController {
     //@TypeDeRequeteMapping permet de lier la requet avec la fonction à exécuter
     @GetMapping(value = "/Produits")
     public MappingJacksonValue listProduits(){
-        List<Product>  produits=  productDao.findAll();
+        Iterable<Product>  produits=  productDao.findAll();
 
         //déclaration des régles de filtrage
         SimpleBeanPropertyFilter monFiltre = SimpleBeanPropertyFilter.serializeAllExcept("prixAchat");
@@ -44,7 +44,17 @@ public class ProductController {
         return productDao.findById(id);
     }
 
-    @PostMapping(value= "/Produits")
+    @GetMapping(value="test/Produits/{prixL}")
+    public List<Product> afficherProduitsPlusCher(@PathVariable int prixL){
+        return productDao.findByPrixGreaterThan(400);
+    }
+
+    @GetMapping(value="ProduitsParNom/{nomatrouve}")
+    public List<Product> afficherProduitParNom(@PathVariable String nomatrouve){
+        return productDao.findByNomLike("%"+nomatrouve+"%");
+    }
+
+   @PostMapping(value= "/Produits")
     public ResponseEntity<Void> ajouterProduit(@RequestBody  Product product){
         Product addedProduct = productDao.save(product);
         if( addedProduct == null){
@@ -57,5 +67,13 @@ public class ProductController {
                 .buildAndExpand(addedProduct.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
+    }
+    @DeleteMapping(value="/Produits/{id}")
+    public void supprimerProduit(@PathVariable int id ){
+         productDao.deleteById(id);
+    }
+    @PutMapping(value="/Produits")
+    public void updateProduit(@RequestBody Product produit){
+        productDao.save(produit);
     }
 }
